@@ -1,71 +1,126 @@
-create table students (
-    id integer primary key autoincrement,
-    name text not null
+CREATE TABLE students (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  name text NOT NULL
 );
 
-create table courses (
-    id integer primary key autoincrement,
-    name text not null
+
+CREATE TABLE courses (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  name text NOT NULL
 );
 
-create table addresses (
-    id integer primary key autoincrement,
-    street text not null,
-    city text not null
+
+CREATE TABLE addresses (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  street text NOT NULL,
+  city text NOT NULL
 );
+
 
 -- popular dados para tabela students
+INSERT INTO
+  students (name)
+VALUES
+  ('Lucas Santos'),
+  ('Maria Silva'),
+  ('João Oliveira '),
+  ('Ana Costa'),
+  ('Pedro Almeida'),
+  ('Carla Pereira'),
+  ('Rafael Souza'),
+  ('Fernanda Lima'),
+  ('Bruno Rodrigues'),
+  ('Juliana Ferreira');
+
+
+-- popular dados para tabela courses
+INSERT INTO
+  courses (name)
+VALUES
+  ('CSS'),
+  ('HTML'),
+  ('JavaScript'),
+  ('Python'),
+  ('Java'),
+  ('C#'),
+  ('Ruby'),
+  ('PHP'),
+  ('Swift'),
+  ('Kotlin');
+
 
 -- relacionamento 1:1 (um para um)
 -- um aluno possui um endereço, e um endereço pertence a um aluno
-create table student_address (
-    id integer primary key autoincrement,
-    student_id integer unique not null,
-    street text not null,
-    city text not null,
-    foreign key (student_id) references students (id)
+CREATE TABLE student_address (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  student_id integer UNIQUE NOT NULL,
+  street text NOT NULL,
+  city text NOT NULL,
+  FOREIGN KEY (student_id) REFERENCES students (id)
 );
+
+
+-- populando dados para tabela student_address
+INSERT INTO
+  student_address (student_id, street, city)
+VALUES
+  (1, 'Rua A', 'São Paulo'),
+  (2, 'Rua B', 'Rio de Janeiro');
+
 
 -- relacionamento 1:n (um para muitos)
 -- um curso tem muito módulos
-create table course_modules (
-    id integer primary key autoincrement,
-    course_id integer not null,
-    name text not null,
-    foreign key (course_id) references courses (id)
-)
+CREATE TABLE course_modules (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  course_id integer NOT NULL,
+  name text NOT NULL,
+  FOREIGN KEY (course_id) REFERENCES courses (id)
+);
+
+
+-- populando dados para tabela course_modules
+INSERT INTO
+  course_modules (course_id, name)
+VALUES
+  (1, 'Módulo 1 - Introdução ao CSS'),
+  (1, 'Módulo 2 - Seletores e Propriedades'),
+  (1, 'Módulo 3 - Layouts e Responsividade');
+
+
+INSERT INTO
+  course_modules (course_id, name)
+VALUES
+  (2, 'Módulo 1 - Introdução ao HTML'),
+  (2, 'Módulo 2 - Estrutura de Documentos'),
+  (2, 'Módulo 3 - Formulários e Semântica');
+
 
 /*
 relacionamento n:m (muitos para muitos)
 students: 1 aluno pade fazer muitos cursos
 course: 1 curso pode ter muitos alunos
 */
-create table students_courses (
-    id integer primary key autoincrement,
-    student_id integer not null,
-    course_id integer not null,
-    foreign key (student_id) references students (id),
-    foreign key (course_id) references courses (id)
+CREATE TABLE students_courses (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  student_id integer NOT NULL,
+  course_id integer NOT NULL,
+  FOREIGN KEY (student_id) REFERENCES students (id),
+  FOREIGN KEY (course_id) REFERENCES courses (id)
 );
 
--- populando dados
-insert into
-    students_courses (student_id, course_id)
-values (1, 1);
 
--- select
-select sc.id, sc.student_id, s.name as aluno, sc.course_id, c.name as curso
-from
-    students_courses as sc
-    join students as s on s.id = sc.student_id
-    join courses as c on c.id = sc.course_id;
+-- populando dados para tabela students_courses
+INSERT INTO
+  students_courses (student_id, course_id)
+VALUES
+  (1, 1);
 
-SELECT
-    a.id,
-    a.student_id,
-    s.name AS nome_completo,
-    a.street AS rua,
-    a.city AS cidade
-FROM
-    student_address AS a
-    JOIN students AS s ON s.id = a.student_id;
+INSERT INTO
+  students_courses (student_id, course_id)
+VALUES
+  (1, 2);
+
+INSERT INTO
+  students_courses (student_id, course_id)
+VALUES
+  (4, 1);
