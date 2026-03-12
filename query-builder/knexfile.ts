@@ -3,6 +3,13 @@ export default {
   connection: {
     filename: "./src/database/database.db",
   },
+  // serve para restringir o sqlite a criar registro apenas com relacionamento (FK -> PK)
+  pool: {
+    afterCreate: (connection: any, done: any) => {
+      connection.run("PRAGMA foreign_keys = ON");
+      done();
+    },
+  },
   useNullAsDefault: true,
   migrations: {
     extensions: "ts",
