@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "knex": "node --import tsx ./node_modules/.bin/knex"
+    "knex": "tsx ./node_modules/knex/bin/cli.js"
   },
   "author": "Adonis Cipriano Silveira",
   "license": "ISC",
