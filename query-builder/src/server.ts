@@ -7,9 +7,8 @@ app.use(express.json());
 app.post("/courses", async (request: Request, response: Response) => {
   const { name } = request.body;
 
-  // await knex("courses").insert({ name });
-
-  await knex.raw("INSERT INTO courses (name) values (?)", [name]);
+  await knex("courses").insert({ name });
+  // await knex.raw("INSERT INTO courses (name) values (?)", [name]);
 
   response.status(201).json();
 });
