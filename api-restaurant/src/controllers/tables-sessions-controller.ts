@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { knex } from "@/database/knex";
 import { z } from "zod";
-import {AppError} from "@/utils/app-error";
+import { AppError } from "@/utils/app-error";
 
 class TablesSessionsController {
   async create(request: Request, response: Response, next: NextFunction) {
@@ -20,7 +20,7 @@ class TablesSessionsController {
         .first();
 
       if (session && !session.closed_at) {
-        throw new AppError("this table is already open")
+        throw new AppError("this table is already open");
       }
 
       await knex<TablesSessionsRepository>("tables_session").insert({
