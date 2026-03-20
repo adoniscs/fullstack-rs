@@ -40,8 +40,8 @@ class OrdersController {
         table_session_id,
         product_id,
         quantity,
-        price: produt.price
-      })
+        price: produt.price,
+      });
 
       return response.status(201).json();
     } catch (error) {
