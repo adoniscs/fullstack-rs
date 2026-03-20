@@ -32,8 +32,8 @@ class OrdersController {
         .where({ id: product_id })
         .first();
 
-      if(!produt) {
-        throw new AppError("product not fount")
+      if (!produt) {
+        throw new AppError("product not fount");
       }
 
       return response.status(201).json(produt);

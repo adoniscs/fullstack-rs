@@ -3,7 +3,7 @@ import { Router } from "express";
 import { tablesSessionsRoutes } from "./tables-sessions-routes";
 import { productsRoutes } from "./products-routes";
 import { tablesRoutes } from "./tables-routes";
-import { ordersRoutes} from "./orders-routes";
+import { ordersRoutes } from "./orders-routes";
 
 const routes = Router();
 
