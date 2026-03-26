@@ -1,7 +1,8 @@
 #### Neste projeto, vou implementar apenas a lógica com JS.
  
- - [ ] Criar função para sortear números com repetição;
- - [ ] Criar função para sortear números sem repetição;
- - [ ] Garantir que o sorteio inclua os valores mínimo e máximo;
- - [ ] Exibir os números sorteados na tela (console)
+ - [x] Criar função (classe) para sortear números com repetição;
+ - [ ] Criar função (classe) para sortear números sem repetição;
+ - [x] Garantir que o sorteio inclua os valores mínimo e máximo;
+ - [x] permitir informar mais de um número para ser sorteado
+ - [x] Exibir os números sorteados na tela (console)
  
