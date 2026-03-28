@@ -1,0 +1,13 @@
+{
+  "name": "api-support-tickets",
+  "version": "1.0.0",
+  "description": "API de gerenciamento de tickets de suporte.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "author": "Adonis Silveira",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0"
+}
