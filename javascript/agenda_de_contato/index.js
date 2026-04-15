@@ -70,13 +70,21 @@ async function adicionarContato() {
 }
 
 function visualizarContato() {
-    for (let contato of listaDeContatos) {
-        const nome = contato.nome;
-        const telefone = contato.telefone;
-        const email = contato.email;
-
-        console.log(`Nome: ${nome}, Telefone: ${telefone}, Email: ${email}`);
+    if (!listaDeContatos.length) {
+        console.log(
+            "\nLista de contato vazia. Adicione um novo contato a lista.",
+        );
     }
+
+    listaDeContatos.map((contato, indice) => {
+        const indiceAjustado = indice + 1;
+        const favorito = contato.favorito ? "❤️" : " ";
+        console.log(
+            `\n${indiceAjustado}. [${favorito}], ${contato.nome}, ${contato.telefone}, ${contato.email}`,
+        );
+    });
+
+    return;
 }
 
 menu();
