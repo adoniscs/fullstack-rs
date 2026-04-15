@@ -23,7 +23,8 @@ async function menu() {
     switch (opcao) {
         case "1":
             console.log("Adicionar contato");
-
+            await adicionarContato();
+            await menu();
             break;
         case "2":
             console.log("Listar todos os contatos");
@@ -49,6 +50,23 @@ async function menu() {
             menu();
             break;
     }
+}
+
+async function adicionarContato() {
+    const nome = await rl.question("Informe o nome: ");
+    const telefone = await rl.question("Informe um número de telefone: ");
+    const email = await rl.question("Informe um endereço de email: ");
+
+    const contato = {
+        nome: nome,
+        telefone: telefone,
+        email: email,
+        favorito: false,
+    };
+
+    listaDeContatos.push(contato);
+    console.log("Contato adicionado com sucesso.");
+    return;
 }
 
 menu();
