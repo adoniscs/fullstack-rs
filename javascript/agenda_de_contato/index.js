@@ -22,12 +22,12 @@ async function menu() {
 
     switch (opcao) {
         case "1":
-            console.log("Adicionar contato");
             await adicionarContato();
             await menu();
             break;
         case "2":
-            console.log("Listar todos os contatos");
+            visualizarContato();
+            await menu();
             break;
         case "3":
             console.log("Editar um contato");
@@ -67,6 +67,16 @@ async function adicionarContato() {
     listaDeContatos.push(contato);
     console.log("Contato adicionado com sucesso.");
     return;
+}
+
+function visualizarContato() {
+    for (let contato of listaDeContatos) {
+        const nome = contato.nome;
+        const telefone = contato.telefone;
+        const email = contato.email;
+
+        console.log(`Nome: ${nome}, Telefone: ${telefone}, Email: ${email}`);
+    }
 }
 
 menu();
