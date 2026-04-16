@@ -77,7 +77,7 @@ function visualizarContato() {
     }
 
     listaDeContatos.map((contato, indice) => {
-        const indiceAjustado = indice + 1;
+        const indiceAjustado = ++indice;
         const favorito = contato.favorito ? "❤️" : " ";
         console.log(
             `\n${indiceAjustado}. [${favorito}], ${contato.nome}, ${contato.telefone}, ${contato.email}`,
