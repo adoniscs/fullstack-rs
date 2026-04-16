@@ -6,6 +6,7 @@ const rl = readline.createInterface({
 });
 
 const listaDeContatos = [];
+let contatoID = 0;
 
 async function menu() {
     const opcao = await rl.question(
@@ -53,11 +54,13 @@ async function menu() {
 }
 
 async function adicionarContato() {
+    const id = ++contatoID;
     const nome = await rl.question("Informe o nome: ");
     const telefone = await rl.question("Informe um número de telefone: ");
     const email = await rl.question("Informe um endereço de email: ");
 
     const contato = {
+        id: id,
         nome: nome,
         telefone: telefone,
         email: email,
@@ -76,11 +79,11 @@ function visualizarContato() {
         );
     }
 
-    listaDeContatos.map((contato, indice) => {
-        const indiceAjustado = ++indice;
-        const favorito = contato.favorito ? "❤️" : " ";
+    listaDeContatos.map((contato) => {
+        const { id, nome, telefone, email, favorito } = contato;
+        const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
-            `\n${indiceAjustado}. [${favorito}], ${contato.nome}, ${contato.telefone}, ${contato.email}`,
+            `\n${id}. [${contatoFavorito}], ${nome}, ${telefone}, ${email}`,
         );
     });
 
