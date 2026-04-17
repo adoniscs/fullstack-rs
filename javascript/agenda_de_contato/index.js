@@ -104,29 +104,35 @@ async function editarContato() {
         );
 
         if (indice < 1 || indice > listaDeContatos.length) {
-            console.log("Índice inválido. Tente novamente.");
+            console.log("Contato não encontrado. Tente novamente!");
             menu();
         } else {
             const itemParaAtualizar = await rl.question(
                 "Qual item da agenda deseja atualizar? (nome, telefone ou email): ",
             );
-            if (itemParaAtualizar.trim().toLowerCase() === "nome") {
-                const contato = listaDeContatos.find(
-                    (item) => item.id === parseInt(indice),
+
+            const campo = itemParaAtualizar.trim().toLowerCase();
+            const camposValidos = ["nome", "telefone", "email"];
+            const contato = listaDeContatos.find(
+                (item) => item.id === parseInt(indice),
+            );
+
+            if (!camposValidos.includes(campo)) {
+                console.log(
+                    "Campo inválido. Use nome, telefone ou email. Tente novamente!",
                 );
-
-                const novoNome = await rl.question(
-                    "Informe o nome atualizado: ",
-                );
-
-                contato.nome = novoNome;
-
-                const posicaoNoArray = parseInt(indice, 10) - 1; // converter indice para 0
-                listaDeContatos[posicaoNoArray].nome = novoNome;
-
-                console.log(`Contato ${contato.id} atualizado com sucesso.`);
                 menu();
+                return;
             }
+
+            const novoValor = await rl.question(
+                `Informe o ${campo} atualizado: `,
+            );
+
+            contato[campo] = novoValor;
+
+            console.log(`Contato ${contato.id} atualizado com sucesso.`);
+            menu();
         }
     }
     return;
