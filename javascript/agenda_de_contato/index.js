@@ -1,3 +1,4 @@
+import { parse } from "node:path/win32";
 import readline from "node:readline/promises";
 
 const rl = readline.createInterface({
@@ -31,7 +32,8 @@ async function menu() {
             await menu();
             break;
         case "3":
-            console.log("Editar um contato");
+            editarContato();
+            await menu();
             break;
         case "4":
             console.log("Favoritar um contato");
@@ -83,10 +85,50 @@ function visualizarContato() {
         const { id, nome, telefone, email, favorito } = contato;
         const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
-            `\n${id}. [${contatoFavorito}], ${nome}, ${telefone}, ${email}`,
+            `${id}. [${contatoFavorito}], ${nome}, ${telefone}, ${email}`,
         );
     });
 
+    return;
+}
+
+async function editarContato() {
+    if (!listaDeContatos.length) {
+        console.log(
+            "\nLista de contato vazia. Adicione um novo contato a lista.",
+        );
+    } else {
+        visualizarContato();
+        const indice = await rl.question(
+            "Informe o índice que deseja atualizar: ",
+        );
+
+        if (indice < 1 || indice > listaDeContatos.length) {
+            console.log("Índice inválido. Tente novamente.");
+            menu();
+        } else {
+            const itemParaAtualizar = await rl.question(
+                "Qual item da agenda deseja atualizar? (nome, telefone ou email): ",
+            );
+            if (itemParaAtualizar.trim().toLowerCase() === "nome") {
+                const contato = listaDeContatos.find(
+                    (item) => item.id === parseInt(indice),
+                );
+
+                const novoNome = await rl.question(
+                    "Informe o nome atualizado: ",
+                );
+
+                contato.nome = novoNome;
+
+                const posicaoNoArray = parseInt(indice, 10) - 1; // converter indice para 0
+                listaDeContatos[posicaoNoArray].nome = novoNome;
+
+                console.log(`Contato ${contato.id} atualizado com sucesso.`);
+                menu();
+            }
+        }
+    }
     return;
 }
 
