@@ -9,51 +9,48 @@ const listaDeContatos = [];
 let contatoID = 0;
 
 async function menu() {
-    const opcao = await rl.question(
-        `
-    1. Adicionar um contato
-    2. Listar todos os contatos
-    3. Editar um contato
-    4. Favoritar um contato
-    5. Visualizar contato favoritos
-    6. Deletar um contato
-    7. Sair
-    `,
-    );
+    while (true) {
+        const opcao = (
+            await rl.question(
+                `
+1. Adicionar um contato
+2. Listar todos os contatos
+3. Editar um contato
+4. Favoritar um contato
+5. Visualizar contato favoritos
+6. Deletar um contato
+7. Sair
+`,
+            )
+        ).trim();
 
-    switch (opcao) {
-        case "1":
-            await adicionarContato();
-            await menu();
-            break;
-        case "2":
-            visualizarContato();
-            await menu();
-            break;
-        case "3":
-            await editarContato();
-            await menu();
-            break;
-        case "4":
-            await favoritarContato();
-            await menu();
-            break;
-        case "5":
-            visualizarContatoFavorito();
-            await menu();
-            break;
-        case "6":
-            await deletarContato();
-            await menu();
-            break;
-        case "7":
-            console.log("Sair");
-            rl.close();
-            break;
-        default:
-            console.log("Opção inválida. Tente novamente.");
-            menu();
-            break;
+        switch (opcao) {
+            case "1":
+                await adicionarContato();
+                break;
+            case "2":
+                visualizarContato();
+                break;
+            case "3":
+                await editarContato();
+                break;
+            case "4":
+                await favoritarContato();
+                break;
+            case "5":
+                visualizarContatoFavorito();
+                break;
+            case "6":
+                await deletarContato();
+                break;
+            case "7":
+                console.log("Agenda finalizada. Até mais! =)");
+                rl.close();
+                return;
+            default:
+                console.log("Opção inválida. Tente novamente.");
+                break;
+        }
     }
 }
 
@@ -107,7 +104,7 @@ async function editarContato() {
 
         if (indice < 1 || indice > listaDeContatos.length) {
             console.log("Contato não encontrado. Tente novamente!");
-            menu();
+            return;
         } else {
             const itemParaAtualizar = await rl.question(
                 "Qual item da agenda deseja atualizar? (nome, telefone ou email): ",
@@ -123,7 +120,6 @@ async function editarContato() {
                 console.log(
                     "Campo inválido. Use nome, telefone ou email. Tente novamente!",
                 );
-                menu();
                 return;
             }
 
@@ -134,7 +130,7 @@ async function editarContato() {
             contato[campo] = novoValor;
 
             console.log(`Contato ${contato.id} atualizado com sucesso.`);
-            menu();
+            return;
         }
     }
     return;
