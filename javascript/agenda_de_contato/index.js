@@ -84,7 +84,7 @@ function visualizarContato() {
     }
 
     listaDeContatos.map((contato) => {
-        const {id, nome, telefone, email, favorito} = contato;
+        const { id, nome, telefone, email, favorito } = contato;
         const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
             `${id}. [${contatoFavorito} ], ${nome}, ${telefone}, ${email}`,
@@ -208,19 +208,19 @@ function visualizarContatoFavorito() {
         return;
     }
 
-    let contatosFavoritos = listaDeContatos.filter(contato => contato.favorito);
+    let contatosFavoritos = listaDeContatos.filter(
+        (contato) => contato.favorito,
+    );
 
     if (!contatosFavoritos.length) {
-        console.log(
-            `\nNenhum contato favorito na lista.`
-        );
+        console.log(`\nNenhum contato favorito na lista.`);
         return;
     }
 
-    contatosFavoritos.map(contato => {
-        const {id, nome, telefone, email} = contato;
+    contatosFavoritos.map((contato) => {
+        const { id, nome, telefone, email } = contato;
         console.log(`${id}). ${nome}, ${telefone}, ${email}`);
-    })
+    });
 
     return;
 }
