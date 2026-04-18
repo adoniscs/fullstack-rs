@@ -36,7 +36,8 @@ async function menu() {
             await menu();
             break;
         case "4":
-            console.log("Favoritar um contato");
+            await favoritarContato();
+            await menu();
             break;
         case "5":
             console.log("Visualizar contato favoritos");
@@ -86,7 +87,7 @@ function visualizarContato() {
         const { id, nome, telefone, email, favorito } = contato;
         const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
-            `${id}. [${contatoFavorito}], ${nome}, ${telefone}, ${email}`,
+            `${id}. [${contatoFavorito} ], ${nome}, ${telefone}, ${email}`,
         );
     });
 
@@ -165,6 +166,36 @@ async function deletarContato() {
 
     listaDeContatos.splice(indice, 1);
     console.log("Contato deletado com sucesso.");
+
+    return;
+}
+
+async function favoritarContato() {
+    if (!listaDeContatos.length) {
+        console.log(
+            "\nLista de contato vazia. Adicione um novo contato a lista.",
+        );
+        return;
+    }
+
+    visualizarContato();
+    const contatoParaFavoritar = parseInt(
+        await rl.question("Informe o índice do contato que deseja favoritar: "),
+        10,
+    );
+
+    const indiceContato = listaDeContatos.find(
+        (item) => item.id === contatoParaFavoritar,
+    );
+
+    if (!indiceContato) {
+        console.log("Contato inválido. Tente novamente!");
+        return;
+    } else {
+        indiceContato["favorito"] = true;
+        console.log("Contato atualizado com sucesso.");
+        visualizarContato();
+    }
 
     return;
 }
