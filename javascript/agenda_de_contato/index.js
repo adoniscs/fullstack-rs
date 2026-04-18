@@ -56,21 +56,35 @@ async function menu() {
 
 async function adicionarContato() {
     const id = ++contatoID;
+
     const nome = await rl.question("Informe o nome: ");
+    if (!nome.trim()) {
+        console.log("Preencha o nome para prosseguir.");
+        return;
+    }
+
     const telefone = await rl.question("Informe um número de telefone: ");
+    if (!telefone.trim()) {
+        console.log("Preencha o telefone para prosseguir.");
+        return;
+    }
+
     const email = await rl.question("Informe um endereço de email: ");
+    if (!email.trim()) {
+        console.log("Preencha o email para prosseguir.");
+        return;
+    }
 
     const contato = {
-        id: id,
-        nome: nome,
-        telefone: telefone,
-        email: email,
+        id,
+        nome,
+        telefone,
+        email,
         favorito: false,
     };
 
     listaDeContatos.push(contato);
     console.log("Contato adicionado com sucesso.");
-    return;
 }
 
 function visualizarContato() {
