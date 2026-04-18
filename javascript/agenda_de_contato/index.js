@@ -92,17 +92,16 @@ function visualizarContato() {
         console.log(
             "\nLista de contato vazia. Adicione um novo contato a lista.",
         );
+        return;
     }
 
-    listaDeContatos.map((contato) => {
+    listaDeContatos.forEach((contato) => {
         const { id, nome, telefone, email, favorito } = contato;
         const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
             `${id}. [${contatoFavorito} ], ${nome}, ${telefone}, ${email}`,
         );
     });
-
-    return;
 }
 
 async function editarContato() {
