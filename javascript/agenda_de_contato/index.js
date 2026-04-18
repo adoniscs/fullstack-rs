@@ -1,4 +1,3 @@
-import { parse } from "node:path/win32";
 import readline from "node:readline/promises";
 
 const rl = readline.createInterface({
@@ -40,7 +39,8 @@ async function menu() {
             await menu();
             break;
         case "5":
-            console.log("Visualizar contato favoritos");
+            visualizarContatoFavorito();
+            await menu();
             break;
         case "6":
             await deletarContato();
@@ -84,7 +84,7 @@ function visualizarContato() {
     }
 
     listaDeContatos.map((contato) => {
-        const { id, nome, telefone, email, favorito } = contato;
+        const {id, nome, telefone, email, favorito} = contato;
         const contatoFavorito = favorito ? "❤️" : " ";
         console.log(
             `${id}. [${contatoFavorito} ], ${nome}, ${telefone}, ${email}`,
@@ -196,6 +196,31 @@ async function favoritarContato() {
         console.log("Contato atualizado com sucesso.");
         visualizarContato();
     }
+
+    return;
+}
+
+function visualizarContatoFavorito() {
+    if (!listaDeContatos.length) {
+        console.log(
+            "\nLista de contato vazia. Adicione um novo contato a lista.",
+        );
+        return;
+    }
+
+    let contatosFavoritos = listaDeContatos.filter(contato => contato.favorito);
+
+    if (!contatosFavoritos.length) {
+        console.log(
+            `\nNenhum contato favorito na lista.`
+        );
+        return;
+    }
+
+    contatosFavoritos.map(contato => {
+        const {id, nome, telefone, email} = contato;
+        console.log(`${id}). ${nome}, ${telefone}, ${email}`);
+    })
 
     return;
 }
