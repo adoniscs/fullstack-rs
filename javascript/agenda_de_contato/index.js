@@ -32,7 +32,7 @@ async function menu() {
             await menu();
             break;
         case "3":
-            editarContato();
+            await editarContato();
             await menu();
             break;
         case "4":
@@ -42,7 +42,8 @@ async function menu() {
             console.log("Visualizar contato favoritos");
             break;
         case "6":
-            console.log("Deletar um contato");
+            await deletarContato();
+            await menu();
             break;
         case "7":
             console.log("Sair");
@@ -135,6 +136,36 @@ async function editarContato() {
             menu();
         }
     }
+    return;
+}
+
+async function deletarContato() {
+    if (!listaDeContatos.length) {
+        console.log(
+            "\nLista de contato vazia. Adicione um novo contato a lista.",
+        );
+        return;
+    }
+
+    visualizarContato();
+
+    const itemParaDeletar = parseInt(
+        await rl.question("Informe o índice do contato que deseja deletar: "),
+        10, // radix
+    );
+
+    const indice = listaDeContatos.findIndex(
+        (item) => item.id === itemParaDeletar,
+    );
+
+    if (indice === -1) {
+        console.log("Contato inválido. Tente novamente!");
+        return;
+    }
+
+    listaDeContatos.splice(indice, 1);
+    console.log("Contato deletado com sucesso.");
+
     return;
 }
 
