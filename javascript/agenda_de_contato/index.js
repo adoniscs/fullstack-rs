@@ -153,25 +153,30 @@ async function deletarContato() {
     }
 
     visualizarContato();
-
-    const itemParaDeletar = parseInt(
-        await rl.question("Informe o índice do contato que deseja deletar: "),
+    const idEscolhido = parseInt(
+        await rl.question("Informe o ID do contato que deseja deletar: "),
         10, // radix
     );
 
-    const indice = listaDeContatos.findIndex(
-        (item) => item.id === itemParaDeletar,
-    );
+    const indice = listaDeContatos.findIndex((item) => item.id === idEscolhido);
 
     if (indice === -1) {
         console.log("Contato inválido. Tente novamente!");
         return;
     }
 
-    listaDeContatos.splice(indice, 1);
-    console.log("Contato deletado com sucesso.");
+    const resposta = await rl.question(
+        `Tem certeza que deseja escluir o contato ${idEscolhido}? (S/N): `,
+    );
 
-    return;
+    if (resposta.trim().toLowerCase() === "n") {
+        console.log("Exclusão cancelada.");
+    } else if (resposta.trim().toLowerCase() === "s") {
+        listaDeContatos.splice(indice, 1);
+        console.log("Contato deletado com sucesso.");
+    } else {
+        console.log("Opção inválida. Escolha S para sim e N para não.");
+    }
 }
 
 async function favoritarContato() {
