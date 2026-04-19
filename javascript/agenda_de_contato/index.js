@@ -16,7 +16,7 @@ async function menu() {
 1. Adicionar um contato
 2. Listar todos os contatos
 3. Editar um contato
-4. Favoritar um contato
+4. Favoritar/Desfavorita um contato
 5. Visualizar contato favoritos
 6. Deletar um contato
 7. Sair
@@ -188,25 +188,21 @@ async function favoritarContato() {
     }
 
     visualizarContato();
-    const contatoParaFavoritar = parseInt(
-        await rl.question("Informe o índice do contato que deseja favoritar: "),
+    const idContato = parseInt(
+        await rl.question("Informe o ID do contato que deseja favoritar: "),
         10,
     );
 
-    const indiceContato = listaDeContatos.find(
-        (item) => item.id === contatoParaFavoritar,
-    );
+    const contato = listaDeContatos.find((item) => item.id === idContato);
 
-    if (!indiceContato) {
+    if (!contato) {
         console.log("Contato inválido. Tente novamente!");
         return;
-    } else {
-        indiceContato["favorito"] = true;
-        console.log("Contato atualizado com sucesso.");
-        visualizarContato();
     }
 
-    return;
+    contato.favorito = !contato.favorito;
+    console.log("Contato atualizado com sucesso.");
+    visualizarContato();
 }
 
 function visualizarContatoFavorito() {
