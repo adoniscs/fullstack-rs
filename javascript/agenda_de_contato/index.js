@@ -10,18 +10,12 @@ let contatoID = 0;
 
 async function menu() {
     while (true) {
+        console.log(
+            "\n1. Adicionar um contato\n2. Listar todos os contatos\n3. Editar um contato\n" +
+            "4. Favoritar/Desfavorita um contato\n5. Visualizar contato favoritos\n6. Deletar um contato\n7. Sair",
+        );
         const opcao = (
-            await rl.question(
-                `
-1. Adicionar um contato
-2. Listar todos os contatos
-3. Editar um contato
-4. Favoritar/Desfavorita um contato
-5. Visualizar contato favoritos
-6. Deletar um contato
-7. Sair
-`,
-            )
+            await rl.question(`\nEscolha uma opção entre (1-7): `)
         ).trim();
 
         switch (opcao) {
