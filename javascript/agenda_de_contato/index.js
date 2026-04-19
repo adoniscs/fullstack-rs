@@ -1,18 +1,44 @@
 import readline from "node:readline/promises";
+import fs from "node:fs/promises";
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
-
-const listaDeContatos = [];
+const ARQUIVO_DADOS = "contatos.json";
+let listaDeContatos = [];
 let contatoID = 0;
+
+async function carregarContatos() {
+    try {
+        const dados = await fs.readFile(ARQUIVO_DADOS, "utf8");
+        listaDeContatos = JSON.parse(dados);
+
+        if (listaDeContatos.length > 0) {
+            const ultimoContato = listaDeContatos[listaDeContatos.length - 1];
+            contatoID = ultimoContato.id;
+        }
+    } catch (error) {
+        if (error.code !== "ENOENT") {
+            console.log("Erro ao carregar lista de contatos: ", error.message);
+        }
+    }
+}
+
+async function salvarContatos() {
+    try {
+        const dadosEmTexto = JSON.stringify(listaDeContatos, null, 2);
+        await fs.writeFile(ARQUIVO_DADOS, dadosEmTexto);
+    } catch (error) {
+        console.log("Erro ao salvar contato: ", error.message);
+    }
+}
 
 async function menu() {
     while (true) {
         console.log(
             "\n1. Adicionar um contato\n2. Listar todos os contatos\n3. Editar um contato\n" +
-            "4. Favoritar/Desfavorita um contato\n5. Visualizar contato favoritos\n6. Deletar um contato\n7. Sair",
+                "4. Favoritar/Desfavorita um contato\n5. Visualizar contato favoritos\n6. Deletar um contato\n7. Sair",
         );
         const opcao = (
             await rl.question(`\nEscolha uma opção entre (1-7): `)
@@ -78,6 +104,7 @@ async function adicionarContato() {
     };
 
     listaDeContatos.push(contato);
+    await salvarContatos();
     console.log("Contato adicionado com sucesso.");
 }
 
@@ -135,6 +162,7 @@ async function editarContato() {
     }
 
     contato[campo] = await rl.question(`Informe o ${campo} atualizado: `);
+    await salvarContatos();
     console.log(`Contato ${contato.id} atualizado com sucesso.`);
 }
 
@@ -167,6 +195,7 @@ async function deletarContato() {
         console.log("Exclusão cancelada.");
     } else if (resposta.trim().toLowerCase() === "s") {
         listaDeContatos.splice(indice, 1);
+        await salvarContatos();
         console.log("Contato deletado com sucesso.");
     } else {
         console.log("Opção inválida. Escolha S para sim e N para não.");
@@ -195,6 +224,7 @@ async function favoritarContato() {
     }
 
     contato.favorito = !contato.favorito;
+    await salvarContatos();
     console.log("Contato atualizado com sucesso.");
     visualizarContato();
 }
@@ -222,4 +252,9 @@ function visualizarContatoFavorito() {
     });
 }
 
-menu();
+async function iniciar() {
+    await carregarContatos();
+    await menu();
+}
+
+iniciar();
