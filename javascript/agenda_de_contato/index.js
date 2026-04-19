@@ -109,44 +109,39 @@ async function editarContato() {
         console.log(
             "\nLista de contato vazia. Adicione um novo contato a lista.",
         );
-    } else {
-        visualizarContato();
-        const indice = await rl.question(
-            "Informe o índice que deseja atualizar: ",
-        );
-
-        if (indice < 1 || indice > listaDeContatos.length) {
-            console.log("Contato não encontrado. Tente novamente!");
-            return;
-        } else {
-            const itemParaAtualizar = await rl.question(
-                "Qual item da agenda deseja atualizar? (nome, telefone ou email): ",
-            );
-
-            const campo = itemParaAtualizar.trim().toLowerCase();
-            const camposValidos = ["nome", "telefone", "email"];
-            const contato = listaDeContatos.find(
-                (item) => item.id === parseInt(indice),
-            );
-
-            if (!camposValidos.includes(campo)) {
-                console.log(
-                    "Campo inválido. Use nome, telefone ou email. Tente novamente!",
-                );
-                return;
-            }
-
-            const novoValor = await rl.question(
-                `Informe o ${campo} atualizado: `,
-            );
-
-            contato[campo] = novoValor;
-
-            console.log(`Contato ${contato.id} atualizado com sucesso.`);
-            return;
-        }
+        return;
     }
-    return;
+
+    visualizarContato();
+    const idEscolhido = await rl.question(
+        "Informe o ID do contato que deseja atualizar: ",
+    );
+
+    const contato = listaDeContatos.find(
+        (item) => item.id === parseInt(idEscolhido),
+    );
+
+    if (!contato) {
+        console.log("Contato não encontrado. Tente novamente!");
+        return;
+    }
+
+    const itemParaAtualizar = await rl.question(
+        "Qual item da agenda deseja atualizar? (nome, telefone ou email): ",
+    );
+
+    const campo = itemParaAtualizar.trim().toLowerCase();
+    const camposValidos = ["nome", "telefone", "email"];
+
+    if (!camposValidos.includes(campo)) {
+        console.log(
+            "Campo inválido. Use nome, telefone ou email. Tente novamente!",
+        );
+        return;
+    }
+
+    contato[campo] = await rl.question(`Informe o ${campo} atualizado: `);
+    console.log(`Contato ${contato.id} atualizado com sucesso.`);
 }
 
 async function deletarContato() {
