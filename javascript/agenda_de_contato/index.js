@@ -213,7 +213,7 @@ function visualizarContatoFavorito() {
         return;
     }
 
-    let contatosFavoritos = listaDeContatos.filter(
+    const contatosFavoritos = listaDeContatos.filter(
         (contato) => contato.favorito,
     );
 
@@ -222,12 +222,10 @@ function visualizarContatoFavorito() {
         return;
     }
 
-    contatosFavoritos.map((contato) => {
-        const { id, nome, telefone, email } = contato;
+    contatosFavoritos.forEach((contatoFavorito) => {
+        const { id, nome, telefone, email } = contatoFavorito;
         console.log(`${id}). ${nome}, ${telefone}, ${email}`);
     });
-
-    return;
 }
 
 menu();
