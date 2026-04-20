@@ -257,4 +257,4 @@ async function iniciar() {
     await menu();
 }
 
-iniciar();
+await iniciar();
